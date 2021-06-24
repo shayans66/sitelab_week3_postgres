@@ -6,6 +6,18 @@ const bcrypt = require('bcrypt')
 
 class User{
   
+  static async makePublicUser(user){
+    return {
+      
+      id: user.id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      location: user.location,
+      date: user.date
+    
+    }
+  }
 
   static async login(credentials){
 
@@ -25,7 +37,7 @@ class User{
     if(user){
       const isValid = await bcrypt.compare(credentials.password, user.password)
       if(isValid)
-        return user
+        return this.makePublicUser(user)
     }
 
 
