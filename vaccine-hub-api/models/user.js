@@ -85,7 +85,7 @@ class User{
     `, [lowercasedEmail, hashedPassword, credentials.first_name, credentials.last_name, credentials.location])
 
       const user = result.rows[0]
-      return user
+      return this.makePublicUser(user)
 
   }
 
