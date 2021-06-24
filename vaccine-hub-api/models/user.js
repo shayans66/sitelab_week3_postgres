@@ -47,6 +47,16 @@ class User{
 
 
   static async register(credentials){
+
+    console.log(credentials);
+    
+
+    credentials.first_name = credentials.firstName 
+    credentials.last_name = credentials.lastName 
+    delete credentials.firstName
+    delete credentials.lastName
+    
+    console.log(credentials);
     
     const requiredFields = ['email', 'password', 'first_name', 'last_name', 'location']
     requiredFields.forEach(field => {
