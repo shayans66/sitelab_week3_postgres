@@ -5,14 +5,35 @@ const {BCRYPT_WORK_FACTOR} = require('../config')
 const bcrypt = require('bcrypt')
 
 class User{
-  /**
-   * 
-   * @param {credentials} 
-   */
+  
+
   static async login(credentials){
+
+    // console.log('hi');
+
+    const requiredFields = ['email', 'password']
+    requiredFields.forEach(field => {
+      if(!credentials.hasOwnProperty(field)){
+        throw new BadRequestError(`Missing ${field} in request body`)
+      }
+    })
+
+    // console.log('hi');
+    // user exist
+    const user = await User.fetchUserByEmail(credentials.email)
+    // console.log('user ',user);
+    if(user){
+      const isValid = await bcrypt.compare(credentials.password, user.password)
+      if(isValid)
+        return user
+    }
+
 
     throw new UnauthorizedError('Invalid email/password combo')
   }
+
+
+
   static async register(credentials){
     
     const requiredFields = ['email', 'password', 'first_name', 'last_name', 'location']
@@ -61,8 +82,11 @@ class User{
       throw new BadRequestError('no email provided')
     }
 
+
     const query = `SELECT * FROM users WHERE email = $1`
     const result = await db.query(query, [email.toLowerCase()])
+
+    // console.log('res ',result);
 
     const user = result.rows[0]
     return user
