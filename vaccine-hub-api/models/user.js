@@ -51,10 +51,10 @@ class User{
     console.log(credentials);
     
 
-    credentials.first_name = credentials.firstName 
-    credentials.last_name = credentials.lastName 
-    delete credentials.firstName
-    delete credentials.lastName
+    // credentials.first_name = credentials.firstName 
+    // credentials.last_name = credentials.lastName 
+    // delete credentials.firstName
+    // delete credentials.lastName
     
     console.log(credentials);
     
@@ -80,6 +80,9 @@ class User{
     //hash
   
     const hashedPassword =  await bcrypt.hash(credentials.password, BCRYPT_WORK_FACTOR)
+
+    
+
 
     const lowercasedEmail = credentials.email.toLowerCase()
     const result = await db.query(`
