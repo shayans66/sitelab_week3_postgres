@@ -50,6 +50,8 @@ export default function Signup({ setAppState }) {
     }
 
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }))
+
+    console.log('form:    ',form);
   }
 
   const handleOnSubmit = async () => {
@@ -65,11 +67,14 @@ export default function Signup({ setAppState }) {
     }
 
     try {
+      console.log('form: ',form);
       const res = await axios.post("http://localhost:3001/auth/register", {
         date: form.date,
         location: form.location,
-        firstName: form.firstName,
-        lastName: form.lastName,
+        first_name: form.firstName,
+        last_name: form.lastName,
+        // firstName: form.first_name,
+        // lastName: form.last_name,
         email: form.email,
         password: form.password,
       })
